@@ -1,0 +1,47 @@
+Pseudo-Pseudo codice
+
+
+AreoPorto:
+
+    Mezzi:
+        Aereo:
+            int copdiceVolo
+            string impresa
+            int maxPasseggieri
+            int pesoMassimoBagagli
+            int pesoBagagli
+            bool andataERitorno
+            bool staFacendoRifornimento
+            bool staCaricandoBagagli
+            semaforo aereoSincro // impedisce all'aereo di essere rifornito e caricato allo stesso tempo
+            ---------------------------
+            Funzione: caricaPasseggieri
+            Funzione: scaricaPasseggieri
+            Funzione: prontoAlDecollo
+
+        VeicoloRifornimento:
+            Funzione: rifornisci
+
+        VeicoloBagaglio:
+            Funzione: carica
+            Funzione: scarica
+    
+    Pista:
+        semaforo mutexAereoInPista
+        --------------------------
+        Funzione: liberaPista
+        Funzione: occupaPista
+
+    Area di sosta:
+        semaforo (contatore) mutexAereiInSosta
+        --------------------------------------
+        Funzione: EntraAreaSosta
+        Funzione: EsciAreaSosta
+        Funzione: InterazioneAereo
+
+
+    HAngar: 
+        semaforo (contatore) mutexAereiInHangar
+
+
+
