@@ -5,35 +5,19 @@ public class VeicoloBagaglio {
 
     }
 
-    public void carica(Semaphore s_veicoloSincro, Aereo aereo, int bagagli){
-        try{
+    public void carica(Aereo aereo, int bagagli){
+        
 
-            s_veicoloSincro.acquire();
+        if(aereo.getPesoBagagli() >= aereo.getMaxPesoBagagli()){
+            aereo.setPesoBagagli(aereo.getMaxPesoBagagli());
+        }else{
+            aereo.setPesoBagagli(aereo.getPesoBagagli() + bagagli);
+        }
 
-            if(aereo.getPesoBagagli() >= aereo.getMaxPesoBagagli()){
-                aereo.setPesoBagagli(aereo.getMaxPesoBagagli());
-            }else{
-                aereo.setPesoBagagli(aereo.getPesoBagagli() + bagagli);
-            }
-
-            s_veicoloSincro.release();
-
-        } catch (InterruptedException exc) { 
-            System.out.println(exc); 
-        } 
     }
 
-    public void scarica(Semaphore s_veicoloSincro, Aereo aereo){
-        try{
+    public void scarica(Aereo aereo){
+        aereo.setPesoBagagli(0);
 
-            s_veicoloSincro.acquire();
-
-            aereo.setPesoBagagli(0);
-
-            s_veicoloSincro.release();
-
-        } catch (InterruptedException exc) { 
-            System.out.println(exc); 
-        } 
     }
 }
