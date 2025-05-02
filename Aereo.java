@@ -1,4 +1,4 @@
-import java.util.concurrent.Semaphore;
+
 
 public class Aereo {
     int codiceVolo;
@@ -9,7 +9,6 @@ public class Aereo {
     int pesoBagagli;
     boolean andataERitorno;
     boolean serbatoioPieno;
-    Semaphore aereoSincro;
 
     public Aereo(){
         this.codiceVolo = 0;
@@ -20,7 +19,6 @@ public class Aereo {
         this.pesoBagagli = 0;
         this.serbatoioPieno = false;
         this.andataERitorno = false;
-        this.aereoSincro = new Semaphore(0);
     }
 
     public Aereo(int codiceVolo, String impresaCostruttrice, int maxPasseggeri, int passeggieri, int maxPesoBagagli, boolean andataERitorno, boolean serbatoioPieno, int valoreSemaforo){
@@ -32,7 +30,6 @@ public class Aereo {
         this.pesoBagagli = 0;
         this.andataERitorno = andataERitorno;
         this.serbatoioPieno = serbatoioPieno;
-        this.aereoSincro = new Semaphore(valoreSemaforo);
     }
 
     public int getCodiceVolo() {
@@ -81,14 +78,6 @@ public class Aereo {
 
     public void setPesoBagagli(int pesoBagagli) {
         this.pesoBagagli = pesoBagagli;
-    }
-
-    public Semaphore getAereoSincro() {
-        return aereoSincro;
-    }
-
-    public void setAereoSincro(Semaphore aereoSincro) {
-        this.aereoSincro = aereoSincro;
     }
 
     public boolean getAndataERitorno() {
