@@ -61,62 +61,83 @@ public class AreaDiSosta {
         }
     }
 
-    public void rifornisciAerei(){
+    public Aereo rifornisciAereo(Aereo aereo){
+        Aereo aereoPieno= aereo;
         try{
             m_veicoloSincro.acquire();
         
             for(int i = 0; i < getAereiInSosta().size(); i++){
-                if (getAereiInSosta().get(i).getSerbatoioPieno() == false) {
-                    getVeicoloRifornimento().fillPlane(getAereiInSosta().get(i));
+                if(getAereiInSosta().get(i).equals(aereo)){
+                    if (getAereiInSosta().get(i).getSerbatoioPieno() == false) {
+                        getVeicoloRifornimento().fillPlane(getAereiInSosta().get(i));
+                        aereoPieno = getAereiInSosta().get(i);
+                    }
                 }
             }
 
             m_veicoloSincro.release();
         }catch (InterruptedException exc) { 
             System.out.println(exc); 
-        } 
+        }
+
+        return aereoPieno;
     }
 
-    public void caricaAerei(int bagagli){
+    public Aereo caricaAereo(Aereo aereo, int bagagli){
+        Aereo aereoConBagagli = aereo;
         try{
             m_veicoloSincro.acquire();
         
             for(int i = 0; i < getAereiInSosta().size(); i++){
-                if (getAereiInSosta().get(i).getPesoBagagli() < getAereiInSosta().get(i).getMaxPesoBagagli()) {
-                    getVeicoloBagaglio().carica(getAereiInSosta().get(i), bagagli);;
+                if(getAereiInSosta().get(i).equals(aereo)){
+                    if (getAereiInSosta().get(i).getPesoBagagli() < getAereiInSosta().get(i).getMaxPesoBagagli()) {
+                        getVeicoloBagaglio().carica(getAereiInSosta().get(i), bagagli);
+                        aereoConBagagli = getAereiInSosta().get(i);
+                    }
                 }
             }
 
             m_veicoloSincro.release();
         }catch (InterruptedException exc) { 
             System.out.println(exc); 
-        } 
+        }
+        return aereoConBagagli;
     }
 
-    public void scaricaAerei(){
+    public Aereo scaricaAereo(Aereo aereo){
+        Aereo aereoSenzaBagali = aereo;
         try{
             m_veicoloSincro.acquire();
         
             for(int i = 0; i < getAereiInSosta().size(); i++){
-                if (getAereiInSosta().get(i).getPesoBagagli() < getAereiInSosta().get(i).getMaxPesoBagagli()) {
-                    getVeicoloBagaglio().scarica(getAereiInSosta().get(i));
+                if(getAereiInSosta().get(i).equals(aereo)){
+                    if (getAereiInSosta().get(i).getPesoBagagli() < getAereiInSosta().get(i).getMaxPesoBagagli()) {
+                        getVeicoloBagaglio().scarica(getAereiInSosta().get(i));
+                        aereoSenzaBagali = getAereiInSosta().get(i);
+                    }
                 }
             }
 
             m_veicoloSincro.release();
         }catch (InterruptedException exc) { 
             System.out.println(exc); 
-        } 
+        }
+
+        return aereoSenzaBagali;
     }
     
     //da ricordare: andataERitorno per capire se va nell'hangar o parte.
 
     public Aereo esciAreaSosta(Aereo aereo){
+        Aereo aereoCheEsce = null;
         try{
             m_esciDaSosta.acquire();
 
             if(getAereiInSosta().size() > 0){
-                getAereiInSosta().remove(aereo);
+                for(int i = 0; i < getAereiInSosta().size(); i++){
+                    aereoCheEsce = getAereiInSosta().get(getAereiInSosta().size()-1);
+                    getAereiInSosta().remove(i);
+                }
             }
             s_aereiInSosta.release();
 
@@ -124,6 +145,6 @@ public class AreaDiSosta {
         } catch (InterruptedException exc) { 
             System.out.println(exc); 
         }
-        return aereo;
+        return aereoCheEsce;
     }
 }

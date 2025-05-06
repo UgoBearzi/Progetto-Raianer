@@ -109,8 +109,22 @@ public class Aereo {
     }
 
     public boolean prontoAlDecollo(){
-        return (getPasseggieri() == getMaxPasseggeri()) && (getPesoBagagli() == getMaxPesoBagagli()) && getSerbatoioPieno();
+        return (getPasseggieri() == getMaxPasseggeri()) || (getPesoBagagli() == getMaxPesoBagagli());
     }
+
+    @Override
+    public String toString() {
+        return "Aereo con: \ncodice di volo: " + codiceVolo + "\nimpresa costruttrice: " + impresaCostruttrice + "\nmax passeggeri: "
+                + maxPasseggeri + "\npasseggieri: " + passeggieri + "\nmaxPesoBagagli: " + maxPesoBagagli
+                + "\npeso bagagli:" + pesoBagagli + "\nandata e ritorno?:" + andataERitorno + "\nserbatoio pieno?:"
+                + serbatoioPieno;
+    }
+
+    public String toStringCodiceVolo() {
+        return "Aereo con codice di volo: " + codiceVolo;
+    }
+
+    
 
 
 
