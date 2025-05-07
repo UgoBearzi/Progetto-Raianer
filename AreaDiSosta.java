@@ -125,8 +125,6 @@ public class AreaDiSosta {
 
         return aereoSenzaBagali;
     }
-    
-    //da ricordare: andataERitorno per capire se va nell'hangar o parte.
 
     public Aereo esciAreaSosta(Aereo aereo){
         Aereo aereoCheEsce = null;

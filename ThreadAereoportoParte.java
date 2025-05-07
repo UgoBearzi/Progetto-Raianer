@@ -14,20 +14,28 @@ public class ThreadAereoportoParte extends Thread{
 
         Main.areaDiSosta.entraAreaSosta(aereoCheDevePartire);
         System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è entrato nell'Area di sosta");
+        do{
+            aereoCheDevePartire = Main.areaDiSosta.rifornisciAereo(aereoCheDevePartire);
+            System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è stato rifornito");
 
-        aereoCheDevePartire = Main.areaDiSosta.rifornisciAereo(aereoCheDevePartire);
-        System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è stato rifornito");
+            aereoCheDevePartire = Main.areaDiSosta.caricaAereo(aereoCheDevePartire, pesoBagagli);
+            
+            System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è stato caricato di bagagli fino a: "+ 
+            (aereoCheDevePartire.getPesoBagagli()) + " con bagagli rimasti in aereoporto: " + 
+            (Math.max(0,((aereoCheDevePartire.getPesoBagagli() - aereoCheDevePartire.getMaxPesoBagagli()) + pesoBagagli))));
+            
+            aereoCheDevePartire.caricaPasseggieri(pesoPasseggeri);
 
-        aereoCheDevePartire = Main.areaDiSosta.caricaAereo(aereoCheDevePartire, pesoBagagli);
-        System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è stato caricato di quantita bagagli pari a: "+ pesoBagagli);
+            System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è stato caricato di bagagli fino a: "+ 
+            (aereoCheDevePartire.getPasseggieri()) + " con passeggeri rimasti in aereoporto: " + 
+            (Math.max(0,((aereoCheDevePartire.getPasseggieri() - aereoCheDevePartire.getMaxPasseggeri()) + pesoPasseggeri))));
+        }while(!aereoCheDevePartire.prontoAlDecollo());
         
-        aereoCheDevePartire.caricaPasseggieri(pesoPasseggeri);
-        System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è stato caricato di quantita passeggeri pari a: "+ pesoPasseggeri);
 
         if (aereoCheDevePartire.prontoAlDecollo()) {
             System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è pronto al decollo");
             Main.pista.entraInPista(aereoCheDevePartire);
-            System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è entrato in pista");
+            System.out.println(aereoCheDevePartire.toStringCodiceVolo() + " è decollato");
             Main.pista.liberaPistaDecollo();
         }
     } 

@@ -1,4 +1,4 @@
-public class ThreadAereoportoArriva {
+public class ThreadAereoportoArriva extends Thread{
     Aereo aereo;
     int pesoBagagli;
     int pesoPasseggeri;
@@ -20,24 +20,33 @@ public class ThreadAereoportoArriva {
         Main.areaDiSosta.entraAreaSosta(aereoCheEArrivato);
         
         if(aereoCheEArrivato.getAndataERitorno()){
-            aereoCheEArrivato = Main.areaDiSosta.rifornisciAereo(aereoCheEArrivato);
-            System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è stato rifornito");
-
-            aereoCheEArrivato = Main.areaDiSosta.caricaAereo(aereoCheEArrivato, pesoBagagli);
-            System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è stato caricato di quantita bagagli pari a: "+ pesoBagagli);
+                do{
+                    aereoCheEArrivato = Main.areaDiSosta.rifornisciAereo(aereoCheEArrivato);
+                    System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è stato rifornito");
+        
+                    aereoCheEArrivato = Main.areaDiSosta.caricaAereo(aereoCheEArrivato, pesoBagagli);
             
-            aereoCheEArrivato.caricaPasseggieri(pesoPasseggeri);
-            System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è stato caricato di quantita passeggeri pari a: "+ pesoPasseggeri);
+                    System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è stato caricato di bagagli fino a: "+ 
+                    (aereoCheEArrivato.getPesoBagagli()) + " con bagagli rimasti in aereoporto: " + 
+                    (Math.max(0,(aereoCheEArrivato.getPesoBagagli() - aereoCheEArrivato.getMaxPesoBagagli()) + pesoBagagli)));
+                    
+                    aereoCheEArrivato.caricaPasseggieri(pesoPasseggeri);
+
+                    System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è stato caricato di bagagli fino a: "+ 
+                    (aereoCheEArrivato.getPasseggieri()) + " con passeggeri rimasti in aereoporto: " + 
+                    (Math.max(0,(aereoCheEArrivato.getPasseggieri() - aereoCheEArrivato.getMaxPasseggeri()) + pesoPasseggeri)));
+                }while(!aereoCheEArrivato.prontoAlDecollo());
 
             if (aereoCheEArrivato.prontoAlDecollo()) {
                 System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è pronto al decollo");
                 Main.pista.entraInPista(aereoCheEArrivato);
-                System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è entrato in pista");
+                System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è decollato");
                 Main.pista.liberaPistaDecollo();
             }
         }else{
             aereoCheEArrivato = Main.areaDiSosta.scaricaAereo(aereoCheEArrivato);
             Main.hangar.entraHangar(aereoCheEArrivato);
+            System.out.println(aereoCheEArrivato.toStringCodiceVolo() + " è entrato in hangar");
         }
         
         

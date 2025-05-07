@@ -47,15 +47,10 @@ public class Pista {
     }
 
     public void liberaPistaDecollo(){
-        try{
-            s_aereoInPista.acquire();
-            if(getAereoInPista().size() > 0){
-                getAereoInPista().remove(getAereoInPista().size()-1);
-            }
-
-        } catch (InterruptedException exc) { 
-            System.out.println(exc); 
+        if(getAereoInPista().size() > 0){
+            getAereoInPista().remove(getAereoInPista().size()-1);
         }
+        s_aereoInPista.release();
 
     }
 

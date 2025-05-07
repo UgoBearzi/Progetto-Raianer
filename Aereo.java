@@ -21,7 +21,7 @@ public class Aereo {
         this.andataERitorno = false;
     }
 
-    public Aereo(int codiceVolo, String impresaCostruttrice, int maxPasseggeri, int passeggieri, int maxPesoBagagli, boolean andataERitorno, boolean serbatoioPieno, int valoreSemaforo){
+    public Aereo(int codiceVolo, String impresaCostruttrice, int maxPasseggeri, int passeggieri, int maxPesoBagagli, boolean andataERitorno, boolean serbatoioPieno){
         this.codiceVolo = codiceVolo;
         this.impresaCostruttrice = impresaCostruttrice;
         this.maxPasseggeri = maxPasseggeri;
@@ -123,6 +123,31 @@ public class Aereo {
     public String toStringCodiceVolo() {
         return "Aereo con codice di volo: " + codiceVolo;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Aereo other = (Aereo) obj;
+        if (codiceVolo != other.codiceVolo)
+            return false;
+        if (impresaCostruttrice == null) {
+            if (other.impresaCostruttrice != null)
+                return false;
+        } else if (!impresaCostruttrice.equals(other.impresaCostruttrice))
+            return false;
+        if (maxPasseggeri != other.maxPasseggeri)
+            return false;
+        if (maxPesoBagagli != other.maxPesoBagagli)
+            return false;
+        return true;
+    }
+
+    
 
     
 
